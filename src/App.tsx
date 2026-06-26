@@ -1,12 +1,8 @@
 import { useState } from "react"
 
-function App() {
-  type Usuario = {
-    id: number
-    nome: string
-    ativo: boolean
-  }
+import type { Usuario } from "./types/Usuario"
 
+function App() {
   const [usuarios, setUsuarios] = useState<Usuario[]>([
     {
       id: 1,
