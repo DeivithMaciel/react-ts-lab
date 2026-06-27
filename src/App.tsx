@@ -20,12 +20,28 @@ function App() {
   const [busca, setBusca] = useState('')
   const [darkMode, setDarkMode] = useState(false)
 
-  function removeUser(id: number) {
+  function addUser(nome: string) {
+    if (!nome.trim()) return
+    const usuarioExiste = usuarios.find((user) => user.nome.toLowerCase() === nome.toLowerCase())
+    if(!usuarioExiste) {
+      const novoUsuario = {
+        id: Date.now(),
+        nome: nome,
+        ativo: true
+      }
+      setUsuarios([...usuarios, novoUsuario])
+      setNome('')
+    } else {
+      alert('Usuario já existente')
+    }
+  }
+
+  function removeUser(id: number): void {
     const novaLista = usuarios.filter((user) => user.id !== id)
     setUsuarios(novaLista)
   }
 
-  function activeToggle(id: number) {
+  function activeToggle(id: number): void {
     const novaLista = usuarios.map((user) => {
       if (user.id === id) {
         return {
@@ -38,7 +54,7 @@ function App() {
     setUsuarios(novaLista)
   }
 
-  function editUser (id: number, novoNome: string) {
+  function editUser (id: number, novoNome: string): void {
     const novaLista = usuarios.map((user) => {
       if (user.id === id) {
         return {
@@ -51,11 +67,19 @@ function App() {
     setUsuarios(novaLista)
   }
 
+
+    const nomesFiltrados = usuarios.filter((user) => user.nome.toLowerCase().includes(busca.toLowerCase()))
+
   return (
     <div>
       <h1>React + Typescript</h1>
+      <div>
+        <input value={nome} onChange={(e) => setNome(e.target.value)} />
+        <button onClick={() => addUser(nome)}>Adicionar</button>
+        <input onChange={((e) => setBusca(e.target.value))} value={busca} placeholder="buscar usuario" />
+      </div>
       <ul>
-        {usuarios.map((user) => (
+        {nomesFiltrados.map((user) => (
           <Card
         key={user.id}
         user={user}
