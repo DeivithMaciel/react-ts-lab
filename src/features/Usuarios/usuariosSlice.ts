@@ -2,13 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from "@reduxjs/toolkit"
 
 
+import { API_URL } from '../../services/api'
 import type { Usuario } from '../../types/Usuario'
 
-const URL = 'http://localhost:3001/usuarios'
 export const fetchUsuarios = createAsyncThunk(
     "usuarios/fetchUsuarios",
     async () => {
-        const res = await fetch(URL)
+        const res = await fetch(API_URL)
         const usuarios: Usuario[] = await res.json()
         return usuarios
     })
@@ -23,7 +23,7 @@ export const addUserAPI = createAsyncThunk(
             ativo: true
         }
 
-        await fetch(URL, {
+        await fetch(API_URL, {
             method: 'POST', //post: criar algo
             headers: {
                 'Content-type': 'application/json' //falando pra api, to mandando um json
@@ -38,7 +38,7 @@ export const removeUserAPI = createAsyncThunk(
     'removeUser/fetchRemove',
     async (id:number) => {
         
-        await fetch(`${URL}/${id}`, {
+        await fetch(`${API_URL}/${id}`, {
             method: 'DELETE'
         })
         return id
