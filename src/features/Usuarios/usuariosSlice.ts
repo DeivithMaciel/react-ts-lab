@@ -1,24 +1,31 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from "@reduxjs/toolkit"
+
 
 import type { Usuario } from '../../types/Usuario'
 
-const initialState: Usuario[] = [
-    {
-        id: 1,
-        nome: "Ana",
-        ativo: true
-    },
-    {
-        id: 2,
-        nome: "João",
-        ativo: false
-    }
-]
+const URL = 'http://localhost:3001/usuarios'
+export const fetchUsuarios = createAsyncThunk(
+    "usuarios/fetchUsuarios",
+    async () => {
+        const res = await fetch(URL)
+        const usuarios: Usuario[] = await res.json()
+        return usuarios
+    })
+
+const initialState: Usuario[] = []
 
 const usuariosSlice = createSlice({
     name: 'usuarios',
     initialState,
+    extraReducers: (builder) => {
+        builder.addCase(
+            fetchUsuarios.fulfilled,
+            (state, action) => {
+                return action.payload
+            }
+        )
+    },
     reducers: {
         addUser(state, action: PayloadAction<string>) {
             if (!action.payload.trim()) return

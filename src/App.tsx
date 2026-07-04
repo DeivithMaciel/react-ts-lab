@@ -1,13 +1,15 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import type { RootState } from "./store/store"
-import { addUser } from "./features/Usuarios/usuariosSlice"
+import type { RootState, AppDispatch } from "./store/store"
+import { addUser, fetchUsuarios } from "./features/Usuarios/usuariosSlice"
 
 import Card from "./components/Card"
 
 function App() {
-const usuarios = useSelector((state: RootState) => state.usuarios)
+  const dispatch = useDispatch<AppDispatch>();
+  const usuarios = useSelector((state: RootState) => state.usuarios)
+
   const [nome, setNome] = useState('')
   const [busca, setBusca] = useState('')
   const [darkMode, setDarkMode] = useState(false)
@@ -16,7 +18,9 @@ const usuarios = useSelector((state: RootState) => state.usuarios)
   const usuariosInativos = usuarios.filter((user) => !user.ativo)
   const nomesFiltrados = usuarios.filter((user) => user.nome.toLowerCase().includes(busca.toLowerCase()))
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUsuarios())
+  })
 
   return (
     <div>
