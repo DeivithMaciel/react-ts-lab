@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 import type { RootState, AppDispatch } from "./store/store"
-import { addUser, fetchUsuarios } from "./features/Usuarios/usuariosSlice"
+import { addUserAPI, fetchUsuarios } from "./features/Usuarios/usuariosSlice"
 
 import Card from "./components/Card"
 
@@ -33,7 +33,7 @@ function App() {
       </div>
       <div>
         <input value={nome} onChange={(e) => setNome(e.target.value)} />
-        <button onClick={() => dispatch(addUser(nome))}>Adicionar</button>
+        <button onClick={() => dispatch(addUserAPI(nome))}>Adicionar</button>
         <input onChange={((e) => setBusca(e.target.value))} value={busca} placeholder="buscar usuario" />
       </div>
       <ul>

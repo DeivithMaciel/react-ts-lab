@@ -13,6 +13,38 @@ export const fetchUsuarios = createAsyncThunk(
         return usuarios
     })
 
+export const addUserAPI = createAsyncThunk(
+    'addUser/fetchAdd',
+    async (nome:string) => {
+
+        const newUser = {
+            id: Date.now(),
+            nome: nome,
+            ativo: true
+        }
+
+        await fetch(URL, {
+            method: 'POST', //post: criar algo
+            headers: {
+                'Content-type': 'application/json' //falando pra api, to mandando um json
+            },
+            body: JSON.stringify(newUser)
+        })
+        return newUser
+    }
+)
+
+export const removeUserAPI = createAsyncThunk(
+    'removeUser/fetchRemove',
+    async (id:number) => {
+        
+        await fetch(`${URL}/${id}`, {
+            method: 'DELETE'
+        })
+        return id
+    }
+)
+
 const initialState: Usuario[] = []
 
 const usuariosSlice = createSlice({
@@ -25,19 +57,14 @@ const usuariosSlice = createSlice({
                 return action.payload
             }
         )
+        builder.addCase(addUserAPI.fulfilled, (state, action) => {
+            state.push(action.payload)
+        })
+        builder.addCase(removeUserAPI.fulfilled, (state, action) => {
+            return state.filter((user) => user.id !== action.payload)
+        })
     },
     reducers: {
-        addUser(state, action: PayloadAction<string>) {
-            if (!action.payload.trim()) return
-            const existingUser = state.find((user) => user.nome.toLowerCase() === action.payload.toLowerCase())
-            if (!existingUser) {
-                state.push({
-                    id: Date.now(),
-                    nome: action.payload,
-                    ativo: true
-                })
-            }
-        },
         editUser(state, action: PayloadAction<{id:number, novoNome:string}>) {
             return state.map((user) => {
                 if (user.id === action.payload.id) {
@@ -48,9 +75,6 @@ const usuariosSlice = createSlice({
                 }
                 return user
             })
-        },
-        removeUser(state, action: PayloadAction<number>) {
-            return state.filter((user) => user.id !== action.payload)
         },
         toggleActive(state, action: PayloadAction<number>) {
             return state.map((user) => {
@@ -67,10 +91,8 @@ const usuariosSlice = createSlice({
 })
 
 export const {
-    addUser,
     editUser,
-    removeUser,
-    toggleActive
+    toggleActive,
 } = usuariosSlice.actions
 
 export default usuariosSlice.reducer

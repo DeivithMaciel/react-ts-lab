@@ -1,14 +1,20 @@
 {
   "usuarios": [
     {
-      "id": 1,
+      "id": "1",
       "nome": "Ana",
       "ativo": true
     },
     {
-      "id": 2,
+      "id": "2",
       "nome": "João",
       "ativo": false
+    },
+    {
+      "id": "ylNUkesvTas",
+      "nome": "Ronaldo",
+      "ativo": true
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
