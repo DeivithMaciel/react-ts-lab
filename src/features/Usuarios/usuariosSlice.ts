@@ -59,4 +59,11 @@ const usuariosSlice = createSlice({
     }
 })
 
+export const {
+    addUser,
+    editUser,
+    removeUser,
+    toggleActive
+} = usuariosSlice.actions
+
 export default usuariosSlice.reducer
