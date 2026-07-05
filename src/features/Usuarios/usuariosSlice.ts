@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import type { PayloadAction } from "@reduxjs/toolkit"
 
 
 import { API_URL } from '../../services/api'
@@ -45,6 +44,44 @@ export const removeUserAPI = createAsyncThunk(
     }
 )
 
+export const editUserAPI = createAsyncThunk(
+    'editUser/fetchEdit',
+    async ({id, novoNome}: {
+    id: number,
+    novoNome: string
+    }) => {
+
+        const usuarioAtual = await fetch(`${API_URL}/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-type':'application/json'
+            },
+            body: JSON.stringify({nome: novoNome})
+        })
+        const usuarioAtualizado = await usuarioAtual.json() 
+        return usuarioAtualizado
+    }
+)
+
+export const toggleActiveAPI = createAsyncThunk(
+    'toggleUser/fetchToggle',
+    async ({id, ativo}: {
+        id: number,
+        ativo: boolean
+    }) => {
+
+        const usuarioAtual = await fetch(`${API_URL}/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-type':'application/json'
+            },
+            body: JSON.stringify({ativo: !ativo})
+        })
+        const usuarioAtualizado = await usuarioAtual.json()
+        return usuarioAtualizado
+    }
+)
+
 const initialState: Usuario[] = []
 
 const usuariosSlice = createSlice({
@@ -63,36 +100,25 @@ const usuariosSlice = createSlice({
         builder.addCase(removeUserAPI.fulfilled, (state, action) => {
             return state.filter((user) => user.id !== action.payload)
         })
-    },
-    reducers: {
-        editUser(state, action: PayloadAction<{id:number, novoNome:string}>) {
+        builder.addCase(editUserAPI.fulfilled, (state, action) => {
             return state.map((user) => {
                 if (user.id === action.payload.id) {
-                    return {
-                        ...user,
-                        nome: action.payload.novoNome
-                    }
+                    return action.payload
                 }
                 return user
             })
-        },
-        toggleActive(state, action: PayloadAction<number>) {
+        })
+        builder.addCase(toggleActiveAPI.fulfilled, (state, action) => {
             return state.map((user) => {
-                if (user.id === action.payload) {
-                    return {
-                        ...user,
-                        ativo: !user.ativo
-                    }
+                if (user.id === action.payload.id) {
+                    return action.payload
                 }
                 return user
             })
-        }
+        })
+    },
+    reducers: {
     }
 })
-
-export const {
-    editUser,
-    toggleActive,
-} = usuariosSlice.actions
 
 export default usuariosSlice.reducer

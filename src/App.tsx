@@ -45,7 +45,6 @@ function App() {
         ))}
       </ul>
       <button onClick={(() => setDarkMode(!darkMode))}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
-      <button></button>
     </div>
   )
 }
