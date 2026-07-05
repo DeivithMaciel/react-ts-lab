@@ -1,13 +1,27 @@
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
+
+import { Container } from "./styles"
 
 export const Navbar = () => {
     return (
-    <div>
-        <Link to={'/'}>Home</Link>
-        <Link to={'/carrinho'}>Carrinho</Link>
-        <Link to={'/produtos'}>Produtos</Link>
-        <Link to={'/usuarios'}>Usuarios</Link>
-    </div>
+    <Container>
+        <NavLink to={'/'}
+        className={({ isActive }) => 
+        isActive ? 'ativo' : '' }
+        >Home</NavLink>
+        <NavLink to={'/carrinho'}
+        className={({ isActive }) => 
+        isActive ? 'ativo' : '' }
+        >Carrinho</NavLink>
+        <NavLink to={'/produtos'}
+        className={({ isActive }) => 
+        isActive ? 'ativo' : '' }
+        >Produtos</NavLink>
+        <NavLink to={'/usuarios'} 
+        className={({ isActive }) => 
+        isActive ? 'ativo' : '' }
+        >Usuarios</NavLink>
+    </Container>
     )
 } 
 
