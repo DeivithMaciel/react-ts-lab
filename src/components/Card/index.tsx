@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux"
 
 import type { AppDispatch } from "../../store/store"
 import type { Usuario } from "../../types/Usuario"
-import { editUserAPI,toggleActiveAPI,removeUserAPI } from "../../features/Usuarios/usuariosSlice"
+import { removeUserAPI, changeUserAPI } from "../../features/Usuarios/usuariosSlice"
 import { useState } from "react"
 
 type CardProps = {
@@ -25,11 +25,11 @@ export const Card = ({user}: CardProps) => {
                 <h3>{user.nome}</h3>
             )}
             <p>{user.ativo ? "🟢 Ativo" : "🔴 Inativo"}</p>
-            <button onClick={(() => dispatch(toggleActiveAPI({id: user.id, ativo: user.ativo})))}>{user.ativo ? 'Desativar' : 'Ativar'}</button>
+            <button onClick={(() => dispatch(changeUserAPI({id: user.id, changes: {ativo: !user.ativo}})))}>{user.ativo ? 'Desativar' : 'Ativar'}</button>
             {editando ? (
                 <>
                     <button onClick={(() => {
-                        dispatch(editUserAPI({id: user.id, novoNome: newName}))
+                        dispatch(changeUserAPI({id: user.id, changes:{nome: newName}}))
                         setEditando(false)
                     })}>Salvar</button>
                     <button onClick={(() => {

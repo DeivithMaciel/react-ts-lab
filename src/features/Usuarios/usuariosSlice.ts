@@ -44,40 +44,20 @@ export const removeUserAPI = createAsyncThunk(
     }
 )
 
-export const editUserAPI = createAsyncThunk(
-    'editUser/fetchEdit',
-    async ({id, novoNome}: {
-    id: number,
-    novoNome: string
-    }) => {
-
-        const usuarioAtual = await fetch(`${API_URL}/${id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-type':'application/json'
-            },
-            body: JSON.stringify({nome: novoNome})
-        })
-        const usuarioAtualizado = await usuarioAtual.json() 
-        return usuarioAtualizado
-    }
-)
-
-export const toggleActiveAPI = createAsyncThunk(
-    'toggleUser/fetchToggle',
-    async ({id, ativo}: {
+export const changeUserAPI = createAsyncThunk(
+    'changeUser/fetchChange',
+    async ({id, changes}: {
         id: number,
-        ativo: boolean
+        changes: Partial<Usuario>
     }) => {
-
-        const usuarioAtual = await fetch(`${API_URL}/${id}`, {
+        const res = await fetch(`${API_URL}/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-type':'application/json'
             },
-            body: JSON.stringify({ativo: !ativo})
+            body: JSON.stringify(changes)
         })
-        const usuarioAtualizado = await usuarioAtual.json()
+        const usuarioAtualizado = await res.json()
         return usuarioAtualizado
     }
 )
@@ -100,15 +80,7 @@ const usuariosSlice = createSlice({
         builder.addCase(removeUserAPI.fulfilled, (state, action) => {
             return state.filter((user) => user.id !== action.payload)
         })
-        builder.addCase(editUserAPI.fulfilled, (state, action) => {
-            return state.map((user) => {
-                if (user.id === action.payload.id) {
-                    return action.payload
-                }
-                return user
-            })
-        })
-        builder.addCase(toggleActiveAPI.fulfilled, (state, action) => {
+        builder.addCase(changeUserAPI.fulfilled, (state, action) => {
             return state.map((user) => {
                 if (user.id === action.payload.id) {
                     return action.payload
