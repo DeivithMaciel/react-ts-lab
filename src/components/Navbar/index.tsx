@@ -4,8 +4,9 @@ import { Container } from "./styles"
 
 export const Navbar = () => {
     return (
-    <Container>
-        <NavLink to={'/'}
+        <Container>
+        <ul>
+            <NavLink to={'/'}
         className={({ isActive }) => 
         isActive ? 'ativo' : '' }
         >Home</NavLink>
@@ -21,6 +22,7 @@ export const Navbar = () => {
         className={({ isActive }) => 
         isActive ? 'ativo' : '' }
         >Usuarios</NavLink>
+        </ul>
     </Container>
     )
 } 

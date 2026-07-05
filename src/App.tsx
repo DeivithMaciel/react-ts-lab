@@ -4,7 +4,9 @@ import Carrinho from "./pages/Carrinho";
 import NotFound from "./pages/NotFound";
 import Produtos from "./pages/Produtos";
 import Usuarios from "./pages/Usuarios";
+
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
       <Route path="/produtos" element={<Produtos />} />
       <Route path="/usuarios" element={<Usuarios />} />
     </Routes>
+    <Footer />
     </>
   );
 }

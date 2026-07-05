@@ -1,7 +1,14 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    padding-top: 24px;
+background-color: gray;
+
+
+    ul {
+        padding: 16px;
+        display: flex;
+        justify-content: space-between;
+    }
 
     a {
         font-size: 24px;
@@ -10,9 +17,13 @@ export const Container = styled.div`
         border-radius: 8px;
         text-decoration: none;
         cursor: pointer;
+
+        &:hover {
+            background-color: #5a5a5a;
+        }
     }
 
     .ativo {
-        background-color: gray;
+        background-color: #e0e0e0;
     }
 `
