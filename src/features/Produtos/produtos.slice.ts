@@ -24,3 +24,5 @@ export const produtosSlice = createSlice({
     },
     reducers: {}
 })
+
+export default produtosSlice.reducer

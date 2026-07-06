@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../store/store";
 import { addUserAPI, fetchUsuarios } from "../features/Usuarios/usuariosSlice";
 
-import Card from "../components/Card";
+import Card from "../components/CardUsuarios";
 
 const Usuarios = () => {
   const dispatch = useDispatch<AppDispatch>();
