@@ -1,10 +1,12 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import type { AppDispatch, RootState } from "../store/store"
-import { fetchProdutos } from "../features/Produtos/produtos.slice"
+import type { AppDispatch, RootState } from "../../store/store"
+import { fetchProdutos } from "../../features/Produtos/produtos.slice"
 
-import CardProdutos from "../components/CardProdutos"
+import CardProdutos from "../../components/CardProdutos"
+
+import { List } from "./styles"
 
 const Produtos = () => {
     const produtos = useSelector((state: RootState) => state.produtos)
@@ -15,11 +17,11 @@ const Produtos = () => {
     }, [dispatch])
 
     return (
-        <ul>
+        <List>
             {produtos.map((product) => (
                 <CardProdutos key={product.id} produto={product} />
             ))}
-        </ul>
+        </List>
     )
 
 }
