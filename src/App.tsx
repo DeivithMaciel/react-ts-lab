@@ -24,10 +24,10 @@ function App() {
     <Navbar />
       <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/carrinho" element={<Carrinho />} />
       <Route path="*" element={<NotFound />} />
       <Route path="/produtos" element={<Produtos />} />
       <Route path="/usuarios" element={<Usuarios />} />
+      <Route path="/carrinho" element={<Carrinho />} />
     </Routes>
     <Footer />
     </>

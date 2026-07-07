@@ -30,6 +30,7 @@ const Carrinho = () => {
                         <button onClick={(() => dispatch(addCart(item)))}>+</button>
                     </div>
                     <p>R$ {item.preco}</p>
+                    <p>Subtotal R$ {(item.preco * item.quantidade).toFixed(2)}</p>
                 </ItemList>
             ))}
         </List>
