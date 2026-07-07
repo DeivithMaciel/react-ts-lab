@@ -8,8 +8,18 @@ const Carrinho = () => {
     const carrinho = useSelector((state: RootState) => state.carrinho)
     const dispatch = useDispatch<AppDispatch>()
 
+    const valorTotal = carrinho.reduce((acum, item) => {
+        return acum + (item.preco * item.quantidade)
+    }, 0)
+
     return (
-        <List>
+            <div>
+                {carrinho.length <= 0 ? (
+                    <h2>Carrinho vazio. Adicione algum produto</h2>
+            ) : (
+                <h2>Valor Total: R${valorTotal}</h2>
+            )}
+                <List>
             {carrinho.map((item) => (
                 <ItemList key={item.id}>
                     <img src={item.imagem} alt={item.nome} />
@@ -23,6 +33,7 @@ const Carrinho = () => {
                 </ItemList>
             ))}
         </List>
+            </div>
     )
 }
 
