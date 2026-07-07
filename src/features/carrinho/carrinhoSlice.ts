@@ -4,7 +4,11 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import type { Produto } from "../../types/Produto";
 import type { ItemCarrinho } from "../../types/Carrinho";
 
-export const initialState: ItemCarrinho[] = [];
+const salvo = localStorage.getItem("carrinho")
+
+export const initialState: ItemCarrinho[] = salvo
+  ? JSON.parse(salvo)
+  : []
 
 export const carrinhoSlice = createSlice({
   name: "carrinho",

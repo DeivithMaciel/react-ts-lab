@@ -7,8 +7,18 @@ import Usuarios from "./pages/Usuarios";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "./store/store";
 
 function App() {
+
+  const carrinho = useSelector((state: RootState) => state.carrinho)
+
+  useEffect(() => {
+    localStorage.setItem('carrinho', JSON.stringify(carrinho))
+  },[carrinho])
+
   return (
     <>
     <Navbar />

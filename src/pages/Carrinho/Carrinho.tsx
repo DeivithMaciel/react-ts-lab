@@ -17,7 +17,7 @@ const Carrinho = () => {
                 {carrinho.length <= 0 ? (
                     <h2>Carrinho vazio. Adicione algum produto</h2>
             ) : (
-                <h2>Valor Total: R${valorTotal}</h2>
+                <h2>Valor Total: R${valorTotal.toFixed(2)}</h2>
             )}
                 <List>
             {carrinho.map((item) => (
@@ -29,7 +29,7 @@ const Carrinho = () => {
                         <span>Un: {item.quantidade}</span>
                         <button onClick={(() => dispatch(addCart(item)))}>+</button>
                     </div>
-                    <p>{item.preco}</p>
+                    <p>R$ {item.preco}</p>
                 </ItemList>
             ))}
         </List>
