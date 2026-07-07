@@ -5,7 +5,6 @@ import type { AppDispatch, RootState } from "../../store/store"
 import { fetchProdutos } from "../../features/Produtos/produtos.slice"
 
 import CardProdutos from "../../components/CardProdutos"
-
 import { List } from "./styles"
 
 const Produtos = () => {
