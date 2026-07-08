@@ -1,7 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import type { RootState } from "./store/store";
+import type { AppDispatch, RootState } from "./store/store";
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+
+import { fetchUsuarios } from "./features/Usuarios/usuariosSlice";
+import { fetchProdutos } from "./features/Produtos/produtos.slice";
 
 import Home from "./pages/Home";
 import Carrinho from "./pages/Carrinho/Carrinho";
@@ -18,6 +21,16 @@ function App() {
 
   const carrinho = useSelector((state: RootState) => state.carrinho)
   const auth = useSelector((state: RootState) => state.auth)
+  
+  const dispatch = useDispatch<AppDispatch>();
+  
+    useEffect(() => {
+      dispatch(fetchProdutos())
+      }, [dispatch])
+
+    useEffect(() => {
+      dispatch(fetchUsuarios());
+  });
 
   useEffect(() => {
     localStorage.setItem('carrinho', JSON.stringify(carrinho))

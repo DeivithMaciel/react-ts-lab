@@ -14,17 +14,22 @@
       "id": "LcsPsijpR40",
       "nome": "Maria",
       "ativo": true
+    },
+    {
+      "id": "DZ83_W4OvO8",
+      "nome": "Roberto",
+      "ativo": false
     }
   ],
   "produtos": [
     {
-      "id": 3,
+      "id": "3",
       "nome": "Headphone",
       "preco": 99.99,
       "imagem": "https://m.media-amazon.com/images/I/41sT2C24UDL._AC_SL1000_.jpg"
     },
     {
-      "id": 4,
+      "id": "4",
       "nome": "Mouse",
       "preco": 48.99,
       "imagem": "https://m.media-amazon.com/images/I/51AVGfhKbOL._AC_SL1500_.jpg"

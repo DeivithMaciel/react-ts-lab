@@ -1,5 +1,13 @@
+import StatsGrid from "../components/StatsGrid";
+import Welcome from "../components/WelcomeCard";
+
 const Home = () => {
-    return <h1>Home</h1>
+    return (
+        <div>
+            <Welcome />
+            <StatsGrid />
+        </div>
+    )
 };
 
 export default Home;

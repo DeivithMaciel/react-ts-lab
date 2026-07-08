@@ -21,8 +21,9 @@ const Usuarios = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchUsuarios());
-  });
+      dispatch(fetchUsuarios());
+    });
+
   return (
     <div>
       <h1>React + Typescript</h1>
