@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../../store/store"
 
 import { ItemList, List } from "./styles"
-import { addCart, minusOne } from "../../features/carrinho/carrinhoSlice"
+import { addCart, CleanCart, minusOne } from "../../features/carrinho/carrinhoSlice"
 
 const Carrinho = () => {
     const carrinho = useSelector((state: RootState) => state.carrinho)
@@ -34,6 +34,7 @@ const Carrinho = () => {
                 </ItemList>
             ))}
         </List>
+            <button onClick={(() => dispatch(CleanCart()))}>Limpar carrinho</button>
             </div>
     )
 }

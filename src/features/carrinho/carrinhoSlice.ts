@@ -37,10 +37,13 @@ export const carrinhoSlice = createSlice({
             }
             produtoExistente.quantidade -= 1
         }
-      }
+      },
+    CleanCart() {
+      return  []
+    }
   },
 });
 
-export const { addCart, minusOne } = carrinhoSlice.actions;
+export const { addCart, minusOne, CleanCart } = carrinhoSlice.actions;
 
 export default carrinhoSlice.reducer;
