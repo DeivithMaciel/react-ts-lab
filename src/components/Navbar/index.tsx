@@ -33,10 +33,15 @@ export const Navbar = () => {
         className={({ isActive }) => 
             isActive ? 'ativo' : '' }>
         {auth.isAuthenticated ? 'Logout' : 'Login'}</NavLink>
-        <NavLink to={'/carrinho'}
-        className={({ isActive }) => 
-        isActive ? 'ativo' : '' }
-        >🛒{total}</NavLink>
+        {auth.isAuthenticated 
+        ? (
+            <NavLink to={'/carrinho'}
+            className={({ isActive }) => 
+            isActive ? 'ativo' : '' }
+            >🛒{total}</NavLink>
+        ) : (
+            <a onClick={(() => alert('Você não está conectado'))}>🛒{total}</a>
+        )}
         </ul>
     </Container>
     )
