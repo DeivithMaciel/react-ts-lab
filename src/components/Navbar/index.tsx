@@ -27,6 +27,10 @@ export const Navbar = () => {
         className={({ isActive }) => 
             isActive ? 'ativo' : '' }
         >Usuarios</NavLink>
+        <NavLink to={'/auth'}
+        className={({ isActive }) => 
+            isActive ? 'ativo' : '' }>
+        Login</NavLink>
         <NavLink to={'/carrinho'}
         className={({ isActive }) => 
         isActive ? 'ativo' : '' }
