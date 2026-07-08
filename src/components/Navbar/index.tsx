@@ -1,17 +1,19 @@
 import { NavLink } from "react-router-dom"
 
 import { Container } from "./styles"
-import { useSelector } from "react-redux"
-import type { RootState } from "../../store/store"
+import { useDispatch, useSelector } from "react-redux"
+import type { AppDispatch, RootState } from "../../store/store"
+import { logout } from "../../features/Auth/authSlice"
 
 export const Navbar = () => {
     const carrinho = useSelector((state:RootState) => state.carrinho)
     const auth = useSelector((state:RootState) => state.auth)
 
+    const dispatch = useDispatch<AppDispatch>()
+
     const total = carrinho.reduce((acum, item) => {
         return acum + item.quantidade
     }, 0)
-
 
     return (
         <Container>
@@ -29,10 +31,16 @@ export const Navbar = () => {
             isActive ? 'ativo' : '' }
         >Usuarios</NavLink>
         <h4>{auth.isAuthenticated ? `Olá, ${auth.user?.name}` : 'Bem vindo'}</h4>
-        <NavLink to={'/auth'}
+        {auth.isAuthenticated 
+        ? (
+            <button onClick={(() => dispatch(logout()))}>Logout</button>
+        ) : (
+            <NavLink to={'/auth'}
         className={({ isActive }) => 
             isActive ? 'ativo' : '' }>
-        {auth.isAuthenticated ? 'Logout' : 'Login'}</NavLink>
+        Login</NavLink>
+        )}
+        
         {auth.isAuthenticated 
         ? (
             <NavLink to={'/carrinho'}

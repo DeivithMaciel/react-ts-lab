@@ -31,4 +31,17 @@ background-color: gray;
     .ativo {
         background-color: #e0e0e0;
     }
+
+    button {
+        font-size: 18px;
+        background-color: gray;
+        padding: 8px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #5a5a5a;
+        }
+    }
 `
