@@ -1,9 +1,8 @@
-import { useSelector } from "react-redux"
-import type { RootState } from "../../store/store"
+import { useAuth } from "../../utils/hooks"
 import { Container } from "./styles"
 
 export const Welcome = () => {
-    const auth = useSelector((state: RootState) => state.auth)
+    const auth = useAuth()
 
     return (
         <Container>

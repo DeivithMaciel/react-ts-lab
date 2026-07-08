@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-import type { AppDispatch, RootState } from "./store/store";
+import type { AppDispatch } from "./store/store";
 import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
 import { fetchUsuarios } from "./features/Usuarios/usuariosSlice";
 import { fetchProdutos } from "./features/Produtos/produtos.slice";
@@ -16,11 +16,12 @@ import Auth from "./pages/Auth";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { useAuth, useCarrinho } from "./utils/hooks";
 
 function App() {
 
-  const carrinho = useSelector((state: RootState) => state.carrinho)
-  const auth = useSelector((state: RootState) => state.auth)
+  const carrinho = useCarrinho()
+  const auth = useAuth()
   
   const dispatch = useDispatch<AppDispatch>();
   

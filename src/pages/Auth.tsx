@@ -1,10 +1,11 @@
-import { useDispatch, useSelector } from "react-redux"
-import type { AppDispatch, RootState } from "../store/store"
+import { useDispatch } from "react-redux"
+import type { AppDispatch } from "../store/store"
 import { login, logout } from "../features/Auth/authSlice"
 import { useState } from "react"
+import { useAuth } from "../utils/hooks"
 
 export const Auth = () => {
-    const authetication = useSelector((state: RootState) => state.auth)
+    const authetication = useAuth()
     const dispatch = useDispatch<AppDispatch>()
 
     const [ name, setName] = useState('')

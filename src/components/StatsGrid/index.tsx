@@ -4,19 +4,14 @@ import type { RootState } from "../../store/store"
 import  { formatador } from "../../utils/formatCurrency"
 
 import { List } from "./styles"
+import { useCarrinho } from "../../utils/hooks"
 
 export const StatsGrid = () => {
-    const carrinho = useSelector((state: RootState) => state.carrinho)
+    const { totalCart, valorTotal } = useCarrinho()
     const produtos = useSelector((state: RootState) => state.produtos)
     const usuarios = useSelector((state: RootState) => state.usuarios)
 
-    const valorTotal = carrinho.reduce((acum, item) => {
-        return acum + (item.preco * item.quantidade)
-    }, 0)
 
-    const totalCart = carrinho.reduce((acum, item) => {
-        return acum + item.quantidade
-    }, 0)
 
     return (
             <List>

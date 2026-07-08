@@ -4,16 +4,13 @@ import { Container } from "./styles"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../../store/store"
 import { logout } from "../../features/Auth/authSlice"
+import { useCarrinho } from "../../utils/hooks"
 
 export const Navbar = () => {
-    const carrinho = useSelector((state:RootState) => state.carrinho)
+    const { totalCart } = useCarrinho()
     const auth = useSelector((state:RootState) => state.auth)
 
     const dispatch = useDispatch<AppDispatch>()
-
-    const total = carrinho.reduce((acum, item) => {
-        return acum + item.quantidade
-    }, 0)
 
     return (
         <Container>
@@ -46,7 +43,7 @@ export const Navbar = () => {
             <NavLink to={'/carrinho'}
             className={({ isActive }) => 
             isActive ? 'ativo' : '' }
-            >🛒{total}</NavLink>
+            >🛒{totalCart}</NavLink>
         </ul>
     </Container>
     )

@@ -1,17 +1,14 @@
-import { useDispatch, useSelector } from "react-redux"
-import type { AppDispatch, RootState } from "../../store/store"
+import { useDispatch } from "react-redux"
+import type { AppDispatch } from "../../store/store"
 
 import { ItemList, List } from "./styles"
 import { addCart, CleanCart, minusOne } from "../../features/carrinho/carrinhoSlice"
 import { formatador } from "../../utils/formatCurrency"
+import { useCarrinho } from "../../utils/hooks"
 
 const Carrinho = () => {
-    const carrinho = useSelector((state: RootState) => state.carrinho)
+    const { carrinho, valorTotal } = useCarrinho()
     const dispatch = useDispatch<AppDispatch>()
-
-    const valorTotal = carrinho.reduce((acum, item) => {
-        return acum + (item.preco * item.quantidade)
-    }, 0)
 
     return (
             <div>
