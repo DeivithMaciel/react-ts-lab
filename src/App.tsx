@@ -16,6 +16,7 @@ import Footer from "./components/Footer";
 function App() {
 
   const carrinho = useSelector((state: RootState) => state.carrinho)
+  const auth = useSelector((state: RootState) => state.auth)
 
   useEffect(() => {
     localStorage.setItem('carrinho', JSON.stringify(carrinho))
@@ -30,7 +31,12 @@ function App() {
       <Route path="/produtos" element={<Produtos />} />
       <Route path="/usuarios" element={<Usuarios />} />
       <Route path="/auth" element={<Auth />} />
-      <Route path="/carrinho" element={<Carrinho />} />
+      {auth.isAuthenticated 
+      ? (
+        <Route path="/carrinho" element={<Carrinho />} />
+      ) : (
+        <Route path="/carrinho" element={<Auth />} />
+      )}
     </Routes>
     <Footer />
     </>

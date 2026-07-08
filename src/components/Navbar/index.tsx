@@ -28,7 +28,7 @@ export const Navbar = () => {
         className={({ isActive }) => 
             isActive ? 'ativo' : '' }
         >Usuarios</NavLink>
-        <h4>{auth.isAuthenticated ? `Olá, ${auth.user?.name}` : ''}</h4>
+        <h4>{auth.isAuthenticated ? `Olá, ${auth.user?.name}` : 'Bem vindo'}</h4>
         <NavLink to={'/auth'}
         className={({ isActive }) => 
             isActive ? 'ativo' : '' }>
