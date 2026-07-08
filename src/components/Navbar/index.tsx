@@ -40,16 +40,10 @@ export const Navbar = () => {
             isActive ? 'ativo' : '' }>
         Login</NavLink>
         )}
-        
-        {auth.isAuthenticated 
-        ? (
             <NavLink to={'/carrinho'}
             className={({ isActive }) => 
             isActive ? 'ativo' : '' }
             >🛒{total}</NavLink>
-        ) : (
-            <a onClick={(() => alert('Você não está conectado'))}>🛒{total}</a>
-        )}
         </ul>
     </Container>
     )

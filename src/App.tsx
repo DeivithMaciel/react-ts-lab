@@ -12,11 +12,11 @@ import Auth from "./pages/Auth";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 
   const carrinho = useSelector((state: RootState) => state.carrinho)
-  const auth = useSelector((state: RootState) => state.auth)
 
   useEffect(() => {
     localStorage.setItem('carrinho', JSON.stringify(carrinho))
@@ -31,16 +31,15 @@ function App() {
       <Route path="/produtos" element={<Produtos />} />
       <Route path="/usuarios" element={<Usuarios />} />
       <Route path="/auth" element={<Auth />} />
-      {auth.isAuthenticated 
-      ? (
-        <Route path="/carrinho" element={<Carrinho />} />
-      ) : (
-        <Route path="/carrinho" element={<Auth />} />
-      )}
+      <Route path="/carrinho" element={
+        <ProtectedRoute>
+          <Carrinho />
+        </ProtectedRoute>
+      }/>
     </Routes>
     <Footer />
     </>
-  );
+  )
 }
 
 export default App;
