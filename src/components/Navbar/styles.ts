@@ -8,6 +8,7 @@ background-color: gray;
         padding: 16px;
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
     a {
@@ -21,6 +22,10 @@ background-color: gray;
         &:hover {
             background-color: #5a5a5a;
         }
+    }
+
+    h4 {
+        font-size: 18px;
     }
 
     .ativo {

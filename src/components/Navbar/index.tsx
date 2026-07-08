@@ -6,6 +6,7 @@ import type { RootState } from "../../store/store"
 
 export const Navbar = () => {
     const carrinho = useSelector((state:RootState) => state.carrinho)
+    const auth = useSelector((state:RootState) => state.auth)
 
     const total = carrinho.reduce((acum, item) => {
         return acum + item.quantidade
@@ -27,10 +28,11 @@ export const Navbar = () => {
         className={({ isActive }) => 
             isActive ? 'ativo' : '' }
         >Usuarios</NavLink>
+        <h4>{auth.isAuthenticated ? `Olá, ${auth.user?.name}` : ''}</h4>
         <NavLink to={'/auth'}
         className={({ isActive }) => 
             isActive ? 'ativo' : '' }>
-        Login</NavLink>
+        {auth.isAuthenticated ? 'Logout' : 'Login'}</NavLink>
         <NavLink to={'/carrinho'}
         className={({ isActive }) => 
         isActive ? 'ativo' : '' }
