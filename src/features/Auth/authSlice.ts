@@ -1,10 +1,15 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { AuthState, User } from "../../types/Auth";
 
-export const initialState: AuthState = {
+const salvo = localStorage.getItem('auth')
+
+export const initialState: AuthState = salvo
+? JSON.parse(salvo)
+: {
     isAuthenticated: false,
     user: null
 } 
+
 export const AuthSlice = createSlice({
     name: 'autenticacao',
     initialState,

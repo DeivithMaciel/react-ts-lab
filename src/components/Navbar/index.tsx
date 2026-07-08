@@ -33,7 +33,10 @@ export const Navbar = () => {
         <h4>{auth.isAuthenticated ? `Olá, ${auth.user?.name}` : 'Bem vindo'}</h4>
         {auth.isAuthenticated 
         ? (
-            <button onClick={(() => dispatch(logout()))}>Logout</button>
+            <button onClick={(() => {
+                dispatch(logout())
+                localStorage.removeItem('auth')
+            })}>Logout</button>
         ) : (
             <NavLink to={'/auth'}
         className={({ isActive }) => 
