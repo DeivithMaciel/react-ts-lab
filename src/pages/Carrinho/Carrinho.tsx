@@ -3,6 +3,7 @@ import type { AppDispatch, RootState } from "../../store/store"
 
 import { ItemList, List } from "./styles"
 import { addCart, CleanCart, minusOne } from "../../features/carrinho/carrinhoSlice"
+import { formatador } from "../../utils/formatCurrency"
 
 const Carrinho = () => {
     const carrinho = useSelector((state: RootState) => state.carrinho)
@@ -17,7 +18,7 @@ const Carrinho = () => {
                 {carrinho.length <= 0 ? (
                     <h2>Carrinho vazio. Adicione algum produto</h2>
             ) : (
-                <h2>Valor Total: R${valorTotal.toFixed(2)}</h2>
+                <h2>Valor Total: {formatador.format(valorTotal)}</h2>
             )}
                 <List>
             {carrinho.map((item) => (
@@ -29,8 +30,8 @@ const Carrinho = () => {
                         <span>Un: {item.quantidade}</span>
                         <button onClick={(() => dispatch(addCart(item)))}>+</button>
                     </div>
-                    <p>R$ {item.preco}</p>
-                    <p>Subtotal R$ {(item.preco * item.quantidade).toFixed(2)}</p>
+                    <p>{formatador.format(item.preco)}</p>
+                    <p>Subtotal: {formatador.format(item.preco * item.quantidade)}</p>
                 </ItemList>
             ))}
         </List>
