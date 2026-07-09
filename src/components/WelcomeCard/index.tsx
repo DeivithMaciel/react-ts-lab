@@ -1,4 +1,4 @@
-import { useAuth } from "../../utils/hooks"
+import { useAuth } from "../../hooks/hooks"
 import { Container } from "./styles"
 
 export const Welcome = () => {

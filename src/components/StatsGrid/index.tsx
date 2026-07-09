@@ -1,5 +1,5 @@
 import  { formatador } from "../../utils/formatCurrency"
-import { useCarrinho, useProdutos, useUsuarios } from "../../utils/hooks"
+import { useCarrinho, useProdutos, useUsuarios } from "../../hooks/hooks"
 
 import { List } from "./styles"
 

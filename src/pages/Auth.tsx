@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux"
 import type { AppDispatch } from "../store/store"
 import { login, logout } from "../features/Auth/authSlice"
 import { useState } from "react"
-import { useAuth } from "../utils/hooks"
+import { useAuth } from "../hooks/hooks"
 
 export const Auth = () => {
     const authetication = useAuth()

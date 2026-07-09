@@ -4,7 +4,7 @@ import type { AppDispatch } from "../../store/store"
 import { addCart, CleanCart, minusOne } from "../../features/carrinho/carrinhoSlice"
 
 import { formatador } from "../../utils/formatCurrency"
-import { useCarrinho } from "../../utils/hooks"
+import { useCarrinho } from "../../hooks/hooks"
 import { ItemList, List } from "./styles"
 
 const Carrinho = () => {

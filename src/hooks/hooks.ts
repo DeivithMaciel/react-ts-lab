@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../store/store";
-import { getProdutosCriados } from "./storage";
+import { getProdutosCriados } from "../utils/storage";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 

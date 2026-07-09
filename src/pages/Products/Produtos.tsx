@@ -3,9 +3,10 @@ import { useEffect, useState } from "react"
 import CardProdutos from "../../components/CardProdutos"
 import Modal from "../../components/Modal"
 
-import { useProdutosCompletos } from "../../utils/hooks"
+import { useProdutosCompletos } from "../../hooks/hooks"
 import * as S from "./styles"
 import { addProdutoCriado } from "../../utils/storage"
+import { UseToast } from "../../context/toastContext"
 
 const Produtos = () => {
     const [modalAberta, setModalAberta] = useState(false)
@@ -19,6 +20,8 @@ const Produtos = () => {
         localStorage.setItem('produtos' , JSON.stringify(produtos))
     }, [produtos])
 
+    const { showToast } = UseToast()
+
     return (
         <div>
             <S.List>
@@ -27,6 +30,7 @@ const Produtos = () => {
             ))}
         </S.List>
             <button onClick={(() => setModalAberta(true))}>Novo produto</button>
+            <button onClick={(() => showToast('produto criado com sucesso'))}>Teste Toast</button>
             <Modal 
             aberto={modalAberta} 
             onClose={(() => setModalAberta(false))}

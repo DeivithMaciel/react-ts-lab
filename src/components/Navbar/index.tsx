@@ -4,7 +4,7 @@ import { Container } from "./styles"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../../store/store"
 import { logout } from "../../features/Auth/authSlice"
-import { useCarrinho } from "../../utils/hooks"
+import { useCarrinho } from "../../hooks/hooks"
 
 export const Navbar = () => {
     const { totalCart } = useCarrinho()
