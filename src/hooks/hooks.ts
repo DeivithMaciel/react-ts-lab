@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useMemo } from 'react'
+
 import type { AppDispatch, RootState } from "../store/store";
+
 import { getProdutosCriados } from "../utils/storage";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>()
@@ -10,12 +13,16 @@ export const useProdutos = ()  => useSelector((state: RootState) => state.produt
 
 export const useCarrinho = ()  => {
     const carrinho = useSelector((state: RootState) => state.carrinho)
-    const valorTotal = carrinho.reduce((acum, item) => {
+    const valorTotal = useMemo(() => {
+            return carrinho.reduce((acum, item) => {
         return acum + (item.preco * item.quantidade)
     }, 0)
-    const totalCart = carrinho.reduce((acum, item) => {
+    }, [carrinho])
+    const totalCart = useMemo(() => {
+            return carrinho.reduce((acum, item) => {
         return acum + item.quantidade
     }, 0)
+    }, [carrinho])
     return {
         carrinho,
         valorTotal,
