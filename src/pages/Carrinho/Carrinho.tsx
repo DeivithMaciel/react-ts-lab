@@ -1,10 +1,11 @@
 import { useDispatch } from "react-redux"
 import type { AppDispatch } from "../../store/store"
 
-import { ItemList, List } from "./styles"
 import { addCart, CleanCart, minusOne } from "../../features/carrinho/carrinhoSlice"
+
 import { formatador } from "../../utils/formatCurrency"
 import { useCarrinho } from "../../utils/hooks"
+import { ItemList, List } from "./styles"
 
 const Carrinho = () => {
     const { carrinho, valorTotal } = useCarrinho()

@@ -1,9 +1,13 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 import type { Produto } from '../../types/Produto'
 import { API_PRODUTOS } from "../../services/api";
 
-export const initialState:  Produto[] = []
+const salvo = localStorage.getItem('produtos')
+
+export const initialState:  Produto[] = salvo
+? JSON.parse(salvo)
+: []
 
 export const fetchProdutos = createAsyncThunk(
     'getProducts/fetchProducts',
@@ -22,7 +26,19 @@ export const produtosSlice = createSlice({
             return action.payload
         })
     },
-    reducers: {}
+    reducers: {
+        addProduct(state, action: PayloadAction<Produto>) {
+            const newProduct = {
+                id: Date.now(),
+                nome: action.payload.nome,
+                preco: action.payload.preco,
+                imagem: action.payload.imagem
+            }
+            state.push(newProduct)
+        }
+    }
 })
+
+export const { addProduct } = produtosSlice.actions
 
 export default produtosSlice.reducer

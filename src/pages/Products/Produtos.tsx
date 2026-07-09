@@ -1,29 +1,63 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
+import { addProduct } from "../../features/Produtos/produtos.slice"
 
 import CardProdutos from "../../components/CardProdutos"
-import { useProdutos } from "../../utils/hooks"
-
-import { List } from "./styles"
 import Modal from "../../components/Modal"
+
+import { useAppDispatch, useProdutos } from "../../utils/hooks"
+import * as S from "./styles"
 
 const Produtos = () => {
     const [modalAberta, setModalAberta] = useState(false)
+    const [nome, setNome] = useState('')
+    const [preco, setPreco] = useState('')
+    const [imagem, setImagem] = useState('')
 
     const produtos = useProdutos()
 
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        localStorage.setItem('produtos' , JSON.stringify(produtos))
+    }, [produtos])
+
     return (
         <div>
-            <List>
+            <S.List>
             {produtos.map((product) => (
                 <CardProdutos key={product.id} produto={product} />
             ))}
-        </List>
+        </S.List>
             <button onClick={(() => setModalAberta(true))}>Novo produto</button>
             <Modal 
             aberto={modalAberta} 
             onClose={(() => setModalAberta(false))}
             title="Novo produto">
-                <p>Primeiro teste modal</p>
+                <input placeholder="Nome" value={nome} id="nome" onChange={((e) => setNome(e.target.value))} />
+                <input placeholder="Preço" type="number" id="preco" value={preco} onChange={((e) => setPreco(e.target.value))} />
+                <input placeholder="Imagem" value={imagem} id="imagem" onChange={((e) => setImagem(e.target.value))} />
+                <S.Footer>
+                <button
+                onClick={(() => {
+                dispatch(addProduct({
+                nome,
+                preco: Number(preco),
+                imagem,
+                id: Number()
+            }))
+            setNome('')
+            setImagem('')
+            setPreco('')
+            setModalAberta(false)})}
+                >Salvar</button>
+                <button onClick={(() => {
+                    setNome('')
+                    setImagem('')
+                    setPreco('')
+                    setModalAberta(false)
+                })}>Cancelar</button>
+            </S.Footer>
             </Modal>
         </div>
     )

@@ -28,9 +28,10 @@ export const Header = styled.header`
 export const Content = styled.div`
     display: flex;
     flex-direction: column;
-`
+    padding: 16px 0;
+    border-bottom: 1px solid #000;
 
-export const Footer = styled.footer`
-    display: flex;
-    gap: 18px;
+    input {
+        margin-bottom: 8px;
+    }
 `

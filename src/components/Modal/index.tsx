@@ -21,10 +21,6 @@ const Modal = ({ aberto, onClose, children, title }: ModalProps) => {
             <S.Content>
                 {children}
             </S.Content>
-            <S.Footer>
-                <button>Salvar</button>
-                <button onClick={(() => onClose())}>Cancelar</button>
-            </S.Footer>
         </S.Container>
         </S.Overlay>
     )
