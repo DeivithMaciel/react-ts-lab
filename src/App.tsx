@@ -16,14 +16,12 @@ import Toast from "./components/Toast";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import { UseToast } from "./context/toastContext";
 import { useAppDispatch, useAuth, useCarrinho } from "./hooks/hooks";
 
 function App() {
 
   const { carrinho } = useCarrinho()
   const auth = useAuth()
-  const { message } = UseToast()
   
   const dispatch = useAppDispatch();
   
@@ -59,7 +57,6 @@ function App() {
         </ProtectedRoute>
       }/>
     </Routes>
-    {message && <h2>{message}</h2>}
     <Footer />
     </>
   )

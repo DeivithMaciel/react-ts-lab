@@ -30,7 +30,7 @@ const Produtos = () => {
             ))}
         </S.List>
             <button onClick={(() => setModalAberta(true))}>Novo produto</button>
-            <button onClick={(() => showToast('produto criado com sucesso'))}>Teste Toast</button>
+            <button onClick={(() => showToast('produto criado com sucesso', 'success'))}>Teste Toast</button>
             <Modal 
             aberto={modalAberta} 
             onClose={(() => setModalAberta(false))}

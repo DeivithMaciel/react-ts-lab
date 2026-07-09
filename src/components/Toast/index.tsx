@@ -3,12 +3,18 @@ import { UseToast } from '../../context/toastContext'
 import { Container } from './styles'
 
 const Toast = () => {
-    const {message} = UseToast()
+    const {message, type} = UseToast()
     if (!message) return null
 
+    let icon = "❌"
+
+    if (type === "success") icon = "✔"
+    if (type === "warning") icon = "⚠️"
+
     return createPortal(
-        <Container>
-            {message}
+        <Container type={type}>
+            <span>{icon}</span>
+            <p>{message}</p>
         </Container>,
         document.body
     )
