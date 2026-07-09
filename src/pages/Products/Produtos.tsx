@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react"
 
-import { addProduct } from "../../features/Produtos/produtos.slice"
-
 import CardProdutos from "../../components/CardProdutos"
 import Modal from "../../components/Modal"
 
-import { useAppDispatch, useProdutos } from "../../utils/hooks"
+import { useProdutosCompletos } from "../../utils/hooks"
 import * as S from "./styles"
+import { addProdutoCriado } from "../../utils/storage"
 
 const Produtos = () => {
     const [modalAberta, setModalAberta] = useState(false)
@@ -14,9 +13,7 @@ const Produtos = () => {
     const [preco, setPreco] = useState('')
     const [imagem, setImagem] = useState('')
 
-    const produtos = useProdutos()
-
-    const dispatch = useAppDispatch()
+    const produtos = useProdutosCompletos()
 
     useEffect(() => {
         localStorage.setItem('produtos' , JSON.stringify(produtos))
@@ -40,12 +37,12 @@ const Produtos = () => {
                 <S.Footer>
                 <button
                 onClick={(() => {
-                dispatch(addProduct({
+                addProdutoCriado({
                 nome,
                 preco: Number(preco),
                 imagem,
                 id: Number()
-            }))
+            })
             setNome('')
             setImagem('')
             setPreco('')

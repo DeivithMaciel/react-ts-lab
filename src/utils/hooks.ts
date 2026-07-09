@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../store/store";
+import { getProdutosCriados } from "./storage";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 
@@ -20,4 +21,14 @@ export const useCarrinho = ()  => {
         valorTotal,
         totalCart
     }
+}
+
+export const useProdutosCompletos = () => {
+    const produtosApi = useProdutos()
+    const produtosCriados = getProdutosCriados()
+
+    return [
+        ...produtosApi,
+        ...produtosCriados
+    ]
 }
