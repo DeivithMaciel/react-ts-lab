@@ -20,7 +20,7 @@ import { useAuth, useCarrinho } from "./utils/hooks";
 
 function App() {
 
-  const carrinho = useCarrinho()
+  const { carrinho } = useCarrinho()
   const auth = useAuth()
   
   const dispatch = useDispatch<AppDispatch>();
@@ -31,7 +31,7 @@ function App() {
 
     useEffect(() => {
       dispatch(fetchUsuarios());
-  });
+  }, [dispatch]);
 
   useEffect(() => {
     localStorage.setItem('carrinho', JSON.stringify(carrinho))

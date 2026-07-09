@@ -1,17 +1,12 @@
-import { useSelector } from "react-redux"
-
-import type { RootState } from "../../store/store"
 import  { formatador } from "../../utils/formatCurrency"
+import { useCarrinho, useProdutos, useUsuarios } from "../../utils/hooks"
 
 import { List } from "./styles"
-import { useCarrinho } from "../../utils/hooks"
 
 export const StatsGrid = () => {
     const { totalCart, valorTotal } = useCarrinho()
-    const produtos = useSelector((state: RootState) => state.produtos)
-    const usuarios = useSelector((state: RootState) => state.usuarios)
-
-
+    const produtos = useProdutos()
+    const usuarios = useUsuarios()
 
     return (
             <List>

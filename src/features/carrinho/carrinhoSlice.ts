@@ -6,9 +6,17 @@ import type { ItemCarrinho } from "../../types/Carrinho";
 
 const salvo = localStorage.getItem("carrinho")
 
-export const initialState: ItemCarrinho[] = salvo
-  ? JSON.parse(salvo)
-  : []
+export const initialState: ItemCarrinho[] = (() => {
+  if (!salvo) return []
+
+  const dados = JSON.parse(salvo)
+
+  if (Array.isArray(dados)) {
+    return dados
+  }
+
+  return dados.carrinho ?? []
+})()
 
 export const carrinhoSlice = createSlice({
   name: "carrinho",

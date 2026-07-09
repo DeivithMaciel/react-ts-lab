@@ -1,22 +1,32 @@
+import { useState } from "react"
 
-
-import { useSelector } from "react-redux"
 import CardProdutos from "../../components/CardProdutos"
+import { useProdutos } from "../../utils/hooks"
+
 import { List } from "./styles"
-import type { RootState } from "../../store/store"
+import Modal from "../../components/Modal"
 
 const Produtos = () => {
+    const [modalAberta, setModalAberta] = useState(false)
 
-    const produtos = useSelector((state: RootState) => state.produtos)
+    const produtos = useProdutos()
 
     return (
-        <List>
+        <div>
+            <List>
             {produtos.map((product) => (
                 <CardProdutos key={product.id} produto={product} />
             ))}
         </List>
+            <button onClick={(() => setModalAberta(true))}>Novo produto</button>
+            <Modal 
+            aberto={modalAberta} 
+            onClose={(() => setModalAberta(false))}
+            title="Novo produto">
+                <p>Primeiro teste modal</p>
+            </Modal>
+        </div>
     )
-
 }
 
 export default Produtos
