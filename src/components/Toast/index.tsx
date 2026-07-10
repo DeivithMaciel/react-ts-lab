@@ -1,5 +1,7 @@
 import { createPortal } from 'react-dom'
-import { UseToast } from '../../context/toastContext'
+
+import { UseToast } from '../../context/ToastContext'
+
 import { Container } from './styles'
 
 const Toast = () => {

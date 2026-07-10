@@ -1,6 +1,6 @@
 import styled, {keyframes} from "styled-components";
 
-import type { ToastType } from "../../context/toastContext";
+import type { ToastType } from "../../context/ToastContext";
 
 type ContainerType = {
     type: ToastType

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 import CardProdutos from "../../components/CardProdutos"
 import Modal from "../../components/Modal"
@@ -6,7 +6,7 @@ import Modal from "../../components/Modal"
 import { useProdutosCompletos } from "../../hooks/hooks"
 import * as S from "./styles"
 import { addProdutoCriado } from "../../utils/storage"
-import { UseToast } from "../../context/toastContext"
+import { UseToast } from "../../context/ToastContext"
 
 const Produtos = () => {
     const [modalAberta, setModalAberta] = useState(false)
@@ -22,6 +22,10 @@ const Produtos = () => {
 
     const { showToast } = UseToast()
 
+    const closeModal = useCallback(() => {
+        setModalAberta(false)
+    }, [])
+
     return (
         <div>
             <S.List>
@@ -33,7 +37,7 @@ const Produtos = () => {
             <button onClick={(() => showToast('produto criado com sucesso', 'success'))}>Teste Toast</button>
             <Modal 
             aberto={modalAberta} 
-            onClose={(() => setModalAberta(false))}
+            onClose={closeModal}
             title="Novo produto">
                 <input placeholder="Nome" value={nome} id="nome" onChange={((e) => setNome(e.target.value))} />
                 <input placeholder="Preço" type="number" id="preco" value={preco} onChange={((e) => setPreco(e.target.value))} />
