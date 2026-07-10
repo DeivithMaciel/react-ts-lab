@@ -20,7 +20,7 @@ export function addProdutoCriado(produto: Produto) {
     const dados = getProdutosCriados()
     const novoProduto = {
         ...produto,
-        id: Date.now()
+        id: crypto.randomUUID()
     }
     dados.push(novoProduto)
     saveProdutosCriados(dados)

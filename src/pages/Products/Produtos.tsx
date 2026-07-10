@@ -11,6 +11,7 @@ import { addProdutoCriado } from "../../utils/storage"
 import * as S from "./styles"
 
 type FormData = {
+    id: string
     nome: string
     preco: number
     imagem: string
@@ -35,7 +36,7 @@ const Produtos = () => {
 
     function onSubmit(data: FormData) {
         addProdutoCriado({
-            id: Date.now(),
+            id: crypto.randomUUID(),
             nome: data.nome,
             preco: Number(data.preco),
             imagem: data.imagem
