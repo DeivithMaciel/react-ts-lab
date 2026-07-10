@@ -1,11 +1,11 @@
 import { createPortal } from 'react-dom'
 
-import { UseToast } from '../../context/ToastContext'
+import { useToast } from '../../context/ToastContext'
 
 import { Container } from './styles'
 
 const Toast = () => {
-    const {message, type} = UseToast()
+    const {message, type} = useToast()
     if (!message) return null
 
     let icon = "❌"

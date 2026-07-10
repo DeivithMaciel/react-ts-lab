@@ -42,7 +42,7 @@ export const ToastProvider = ({
     )
 }
 
-export const UseToast = () => {
+export const useToast = () => {
     const context = useContext(ToastContext)
 
     if (!context) {
