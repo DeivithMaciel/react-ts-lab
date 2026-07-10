@@ -1,18 +1,23 @@
 import { useCallback, useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
 
 import CardProdutos from "../../components/CardProdutos"
 import Modal from "../../components/Modal"
 
-import { useProdutosCompletos } from "../../hooks/hooks"
-import * as S from "./styles"
-import { addProdutoCriado } from "../../utils/storage"
 import { UseToast } from "../../context/ToastContext"
+import { useProdutosCompletos } from "../../hooks/hooks"
+import { addProdutoCriado } from "../../utils/storage"
+
+import * as S from "./styles"
+
+type FormData = {
+    nome: string
+    preco: number
+    imagem: string
+}
 
 const Produtos = () => {
     const [modalAberta, setModalAberta] = useState(false)
-    const [nome, setNome] = useState('')
-    const [preco, setPreco] = useState('')
-    const [imagem, setImagem] = useState('')
 
     const produtos = useProdutosCompletos()
 
@@ -26,6 +31,20 @@ const Produtos = () => {
         setModalAberta(false)
     }, [])
 
+    const { register, handleSubmit, reset } = useForm<FormData>()
+
+    function onSubmit(data: FormData) {
+        addProdutoCriado({
+            id: Date.now(),
+            nome: data.nome,
+            preco: Number(data.preco),
+            imagem: data.imagem
+        })
+        showToast("Produto criado com sucesso", 'success')
+        closeModal()
+        reset()
+    }
+
     return (
         <div>
             <S.List>
@@ -34,32 +53,19 @@ const Produtos = () => {
             ))}
         </S.List>
             <button onClick={(() => setModalAberta(true))}>Novo produto</button>
-            <button onClick={(() => showToast('produto criado com sucesso', 'success'))}>Teste Toast</button>
             <Modal 
             aberto={modalAberta} 
             onClose={closeModal}
             title="Novo produto">
-                <input placeholder="Nome" value={nome} id="nome" onChange={((e) => setNome(e.target.value))} />
-                <input placeholder="Preço" type="number" id="preco" value={preco} onChange={((e) => setPreco(e.target.value))} />
-                <input placeholder="Imagem" value={imagem} id="imagem" onChange={((e) => setImagem(e.target.value))} />
+                <input placeholder="Nome"  {...register('nome')} />
+                <input placeholder="Preço" type="number" {...register('preco')}  />
+                <input placeholder="Imagem" {...register('imagem')} />
                 <S.Footer>
                 <button
-                onClick={(() => {
-                addProdutoCriado({
-                nome,
-                preco: Number(preco),
-                imagem,
-                id: Number()
-            })
-            setNome('')
-            setImagem('')
-            setPreco('')
-            setModalAberta(false)})}
+                onClick={handleSubmit(onSubmit)}
                 >Salvar</button>
                 <button onClick={(() => {
-                    setNome('')
-                    setImagem('')
-                    setPreco('')
+                    reset()
                     setModalAberta(false)
                 })}>Cancelar</button>
             </S.Footer>
