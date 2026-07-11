@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^5.4.0",
     "@reduxjs/toolkit": "^2.12.0",
     "@tanstack/react-query": "^5.101.2",
+    "axios": "^1.18.1",
     "json-server": "^1.0.0-beta.15",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
