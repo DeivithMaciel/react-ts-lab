@@ -10,7 +10,7 @@ import Modal from "../../components/Modal"
 import { useToast } from "../../context/ToastContext"
 import { produtoSchema, type ProdutoFormData } from "../../schemas/produtoSchema"
 import { useProdutosQuery } from "../../hooks/useProdutosQuery"
-import { useCreateProduto, useUpdateProduto } from "../../hooks/useCreateProdutos"
+import { useCreateProduto, useDeleteProduto, useUpdateProduto } from "../../hooks/useCreateProdutos"
 
 import * as S from "./styles"
 
@@ -21,6 +21,7 @@ const Produtos = () => {
 
     const { mutate: createProduto } = useCreateProduto()
     const { mutate: updateProduto } = useUpdateProduto()
+    const {mutate: deleteProduto} = useDeleteProduto()
 
     const {
     data: produtos,
@@ -85,6 +86,17 @@ const Produtos = () => {
         setModalAberta(true)
     }
 
+    function onDelete(id: string) {
+        deleteProduto(id, {
+            onSuccess() {
+                showToast('Excluído com sucesso', 'success')
+            },
+            onError() {
+                showToast('Falha ao excluir', 'error')
+            }
+        })
+    }
+
     const listaProdutos = produtos ?? []
 
     if (isLoading) {
@@ -100,7 +112,7 @@ const Produtos = () => {
         <div>
             <S.List>
             {listaProdutos.map((product) => (
-                <CardProdutos key={product.id} produto={product} onEdit={handleEdit} />
+                <CardProdutos key={product.id} produto={product} onEdit={handleEdit} onDelete={onDelete} />
             ))}
         </S.List>
             <button onClick={(() => setModalAberta(true))}>Novo produto</button>
