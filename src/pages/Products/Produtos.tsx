@@ -19,6 +19,7 @@ const Produtos = () => {
     const [modalAberta, setModalAberta] = useState(false)
     const [excluirModal, setExcluirModal] = useState<Produto | null>(null)
     const [editingProduct, setEditingProduct] = useState<Produto | null>(null)
+    const [page, setPage] = useState(1)
 
     const { mutate: createProduto } = useCreateProduto()
     const { mutate: updateProduto } = useUpdateProduto()
@@ -28,7 +29,7 @@ const Produtos = () => {
     data: produtos,
     isLoading,
     error
-} = useProdutosQuery()
+} = useProdutosQuery(page)
 
     const { showToast } = useToast()
 
@@ -98,8 +99,6 @@ const Produtos = () => {
         })
     }
 
-    const listaProdutos = produtos ?? []
-
     if (isLoading) {
         return <h2>Carregando produtos...</h2>
     }
@@ -108,11 +107,14 @@ const Produtos = () => {
         return <h2>Erro ao carregar produtos.</h2>
     }
 
+    if (!produtos) {
+    return null
+}
 
     return (
         <div>
             <S.List>
-            {listaProdutos.map((product) => (
+            {produtos.data.map((product) => (
                 <CardProdutos key={product.id} produto={product} onEdit={handleEdit} onDelete={setExcluirModal} />
             ))}
         </S.List>

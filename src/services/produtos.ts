@@ -1,8 +1,17 @@
+import type { PaginatedResponse } from "../types/PaginatedResponse";
 import type { Produto } from "../types/Produto";
 import { api } from "./api";
 
-export async function getProdutos() {
-    const { data } = await api.get<Produto[]>('/produtos')
+export async function getProdutos(page: number) {
+    const { data } = await api.get<PaginatedResponse<Produto>>("/produtos",
+        {
+            params: {
+                _page: page,
+                _per_page: 8,
+            },
+        }
+    )
+
     return data
 }
 
