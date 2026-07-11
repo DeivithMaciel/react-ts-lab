@@ -17,6 +17,7 @@ import * as S from "./styles"
 
 const Produtos = () => {
     const [modalAberta, setModalAberta] = useState(false)
+    const [excluirModal, setExcluirModal] = useState<Produto | null>(null)
     const [editingProduct, setEditingProduct] = useState<Produto | null>(null)
 
     const { mutate: createProduto } = useCreateProduto()
@@ -112,7 +113,7 @@ const Produtos = () => {
         <div>
             <S.List>
             {listaProdutos.map((product) => (
-                <CardProdutos key={product.id} produto={product} onEdit={handleEdit} onDelete={onDelete} />
+                <CardProdutos key={product.id} produto={product} onEdit={handleEdit} onDelete={setExcluirModal} />
             ))}
         </S.List>
             <button onClick={(() => setModalAberta(true))}>Novo produto</button>
@@ -143,6 +144,32 @@ const Produtos = () => {
                     closeModal()
                 })}>Cancelar</button>
             </S.Footer>
+            </Modal>
+            <Modal
+            aberto={excluirModal !== null}
+            onClose={closeModal}
+            title="Excluir produto"
+            >
+                <p>
+        Tem certeza que deseja excluir{" "}
+        <strong>{excluirModal?.nome}</strong>?
+    </p>
+    <S.Footer>
+        <button
+            onClick={() => setExcluirModal(null)}
+        >
+            Cancelar
+        </button>
+        <button
+            onClick={() => {
+                if (!excluirModal) return
+                onDelete(excluirModal.id)
+                setExcluirModal(null)
+            }}
+        >
+            Excluir
+        </button>
+    </S.Footer>
             </Modal>
         </div>
     )
