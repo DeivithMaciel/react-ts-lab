@@ -6,15 +6,17 @@ import CardProdutos from "../../components/CardProdutos"
 import Modal from "../../components/Modal"
 
 import { useToast } from "../../context/ToastContext"
-import { addProdutoCriado } from "../../utils/storage"
 import { produtoSchema, type ProdutoFormData } from "../../schemas/produtoSchema"
+import { useProdutosQuery } from "../../hooks/useProdutosQuery"
+import { useCreateProduto } from "../../hooks/useCreateProdutos"
 
 import * as S from "./styles"
-import { useProdutosQuery } from "../../hooks/useProdutosQuery"
 
 
 const Produtos = () => {
     const [modalAberta, setModalAberta] = useState(false)
+
+    const { mutate } = useCreateProduto()
 
     const {
     data: produtos,
@@ -37,16 +39,24 @@ const Produtos = () => {
     })
 
     function onSubmit(data: ProdutoFormData) {
-        addProdutoCriado({
+        mutate({
             id: crypto.randomUUID(),
             nome: data.nome,
             preco: data.preco,
             imagem: data.imagem
+        }, {
+            onSuccess() {
+                showToast('Sucesso ao criar o produto', 'success')
+                reset()
+                closeModal()
+            },
+            onError() {
+                showToast('Falha ao criar o produto', 'error')
+            }
         })
-        showToast("Produto criado com sucesso", 'success')
-        closeModal()
-        reset()
     }
+
+    const listaProdutos = produtos ?? []
 
     if (isLoading) {
         return <h2>Carregando produtos...</h2>
@@ -60,7 +70,7 @@ const Produtos = () => {
     return (
         <div>
             <S.List>
-            {produtos.map((product) => (
+            {listaProdutos.map((product) => (
                 <CardProdutos key={product.id} produto={product} />
             ))}
         </S.List>
