@@ -1,26 +1,26 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import CardProdutos from "../../components/CardProdutos"
 import Modal from "../../components/Modal"
 
 import { useToast } from "../../context/ToastContext"
-import { useProdutosCompletos } from "../../hooks/hooks"
 import { addProdutoCriado } from "../../utils/storage"
 import { produtoSchema, type ProdutoFormData } from "../../schemas/produtoSchema"
 
 import * as S from "./styles"
+import { useProdutosQuery } from "../../hooks/useProdutosQuery"
 
 
 const Produtos = () => {
     const [modalAberta, setModalAberta] = useState(false)
 
-    const produtos = useProdutosCompletos()
-
-    useEffect(() => {
-        localStorage.setItem('produtos' , JSON.stringify(produtos))
-    }, [produtos])
+    const {
+    data: produtos,
+    isLoading,
+    error
+} = useProdutosQuery()
 
     const { showToast } = useToast()
 
@@ -47,6 +47,15 @@ const Produtos = () => {
         closeModal()
         reset()
     }
+
+    if (isLoading) {
+        return <h2>Carregando produtos...</h2>
+    }
+
+    if (error) {
+        return <h2>Erro ao carregar produtos.</h2>
+    }
+
 
     return (
         <div>
