@@ -2,21 +2,25 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback, useState } from "react"
 import { useForm } from "react-hook-form"
 
+import type { Produto } from "../../types/Produto"
+
 import CardProdutos from "../../components/CardProdutos"
 import Modal from "../../components/Modal"
 
 import { useToast } from "../../context/ToastContext"
 import { produtoSchema, type ProdutoFormData } from "../../schemas/produtoSchema"
 import { useProdutosQuery } from "../../hooks/useProdutosQuery"
-import { useCreateProduto } from "../../hooks/useCreateProdutos"
+import { useCreateProduto, useUpdateProduto } from "../../hooks/useCreateProdutos"
 
 import * as S from "./styles"
 
 
 const Produtos = () => {
     const [modalAberta, setModalAberta] = useState(false)
+    const [editingProduct, setEditingProduct] = useState<Produto | null>(null)
 
-    const { mutate } = useCreateProduto()
+    const { mutate: createProduto } = useCreateProduto()
+    const { mutate: updateProduto } = useUpdateProduto()
 
     const {
     data: produtos,
@@ -39,21 +43,46 @@ const Produtos = () => {
     })
 
     function onSubmit(data: ProdutoFormData) {
-        mutate({
-            id: crypto.randomUUID(),
-            nome: data.nome,
-            preco: data.preco,
-            imagem: data.imagem
-        }, {
-            onSuccess() {
-                showToast('Sucesso ao criar o produto', 'success')
-                reset()
-                closeModal()
-            },
-            onError() {
-                showToast('Falha ao criar o produto', 'error')
-            }
-        })
+        if (editingProduct) {
+            updateProduto({
+                id: editingProduct.id,
+                nome: data.nome,
+                preco: data.preco,
+                imagem: data.imagem
+            }, {
+                onSuccess() {
+                    showToast('Sucesso ao editar o produto', 'success')
+                    reset()
+                    setEditingProduct(null)
+                    closeModal()
+                },
+                onError() {
+                    showToast('Falha ao editar o oroduto', 'error')
+                }
+            })
+        } else {
+            createProduto({
+                id: crypto.randomUUID(),
+                nome: data.nome,
+                preco: data.preco,
+                imagem: data.imagem
+            }, {
+                onSuccess() {
+                    showToast('Sucesso ao criar o produto', 'success')
+                    reset()
+                    closeModal()
+                },
+                onError() {
+                    showToast('Falha ao criar o produto', 'error')
+                }
+            })
+        }
+    }
+
+    function handleEdit(produto: Produto) {
+        setEditingProduct(produto)
+        reset(produto)
+        setModalAberta(true)
     }
 
     const listaProdutos = produtos ?? []
@@ -71,7 +100,7 @@ const Produtos = () => {
         <div>
             <S.List>
             {listaProdutos.map((product) => (
-                <CardProdutos key={product.id} produto={product} />
+                <CardProdutos key={product.id} produto={product} onEdit={handleEdit} />
             ))}
         </S.List>
             <button onClick={(() => setModalAberta(true))}>Novo produto</button>
@@ -96,7 +125,7 @@ const Produtos = () => {
                 <S.Footer>
                 <button
                 onClick={handleSubmit(onSubmit)}
-                >Salvar</button>
+                >{editingProduct ? 'Atualizar' : 'Criar'}</button>
                 <button onClick={(() => {
                     reset()
                     closeModal()

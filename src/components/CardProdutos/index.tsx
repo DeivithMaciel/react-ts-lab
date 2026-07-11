@@ -12,8 +12,9 @@ import { Item } from "./styles"
 
 type ProductsProps = {
     produto: Produto
+    onEdit: (produto: Produto) => void
 }
-export const CardProdutos = ({produto}: ProductsProps) => {
+export const CardProdutos = ({produto, onEdit}: ProductsProps) => {
     const dispatch = useDispatch<AppDispatch>()
 
     return (
@@ -22,6 +23,7 @@ export const CardProdutos = ({produto}: ProductsProps) => {
             <h3>{produto.nome}</h3>
             <span>{formatador.format(produto.preco)}</span>
             <button onClick={(() => dispatch(addCart(produto)))}>Adicionar ao carrinho</button>
+            <button onClick={(() => onEdit(produto))}>Editar Produto</button>
         </Item>
     )
 }
