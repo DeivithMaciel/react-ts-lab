@@ -11,3 +11,11 @@ export const Footer = styled.footer`
     padding-top: 8px;
     gap: 18px;
 `
+
+export const Pagination = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+`

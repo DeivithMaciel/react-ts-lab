@@ -118,6 +118,25 @@ const Produtos = () => {
                 <CardProdutos key={product.id} produto={product} onEdit={handleEdit} onDelete={setExcluirModal} />
             ))}
         </S.List>
+        <S.Pagination>
+            <button
+                disabled={produtos.prev === null}
+                onClick={() => setPage((p) => p - 1)}
+            >
+                Anterior
+            </button>
+
+            <span>
+                Página {page} de {produtos.pages}
+            </span>
+
+            <button
+                disabled={produtos.next === null}
+                onClick={() => setPage((p) => p + 1)}
+            >
+                Próxima
+            </button>
+        </S.Pagination>
             <button onClick={(() => setModalAberta(true))}>Novo produto</button>
             <Modal 
             aberto={modalAberta} 
