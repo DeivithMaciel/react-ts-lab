@@ -12,6 +12,7 @@ export const produtoSchema = z.object({
     imagem: z
         .string()
         .min(1, "Informe a imagem")
+        .url('Informe uma URL válida')
 })
 
 export type ProdutoFormData = z.infer<typeof produtoSchema> 
