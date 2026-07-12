@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import type { Produto } from "../../types/Produto"
@@ -21,6 +21,7 @@ const Produtos = () => {
     const [editingProduct, setEditingProduct] = useState<Produto | null>(null)
     const [page, setPage] = useState(1)
     const [search, setSearch] = useState("")
+    const [debouncedSearch, setDebouncedSearch] = useState('')
 
     const { mutate: createProduto } = useCreateProduto()
     const { mutate: updateProduto } = useUpdateProduto()
@@ -30,7 +31,7 @@ const Produtos = () => {
     data: produtos,
     isLoading,
     error
-} = useProdutosQuery(page, search)
+} = useProdutosQuery(page, debouncedSearch)
 
     const { showToast } = useToast()
 
@@ -100,6 +101,13 @@ const Produtos = () => {
         })
     }
 
+    useEffect(() => {
+        const timeOut = setTimeout(() => {
+            setDebouncedSearch(search)
+        }, 300)
+        return () => clearTimeout(timeOut)
+    }, [search])
+
     if (isLoading) {
         return <h2>Carregando produtos...</h2>
     }
@@ -118,7 +126,9 @@ const Produtos = () => {
             type="text"
             placeholder="Pesquisar produto..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) =>{ 
+                setSearch(e.target.value)
+                setPage(1)}}
         />
             <S.List>
             {produtos.data.map((product) => (
