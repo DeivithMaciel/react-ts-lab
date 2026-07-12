@@ -20,6 +20,7 @@ const Produtos = () => {
     const [excluirModal, setExcluirModal] = useState<Produto | null>(null)
     const [editingProduct, setEditingProduct] = useState<Produto | null>(null)
     const [page, setPage] = useState(1)
+    const [search, setSearch] = useState("")
 
     const { mutate: createProduto } = useCreateProduto()
     const { mutate: updateProduto } = useUpdateProduto()
@@ -29,7 +30,7 @@ const Produtos = () => {
     data: produtos,
     isLoading,
     error
-} = useProdutosQuery(page)
+} = useProdutosQuery(page, search)
 
     const { showToast } = useToast()
 
@@ -113,6 +114,12 @@ const Produtos = () => {
 
     return (
         <div>
+            <input
+            type="text"
+            placeholder="Pesquisar produto..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+        />
             <S.List>
             {produtos.data.map((product) => (
                 <CardProdutos key={product.id} produto={product} onEdit={handleEdit} onDelete={setExcluirModal} />
