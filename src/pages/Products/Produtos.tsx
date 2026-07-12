@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import type { Produto } from "../../types/Produto"
@@ -11,6 +11,7 @@ import { useToast } from "../../context/ToastContext"
 import { produtoSchema, type ProdutoFormData } from "../../schemas/produtoSchema"
 import { useProdutosQuery } from "../../hooks/useProdutosQuery"
 import { useCreateProduto, useDeleteProduto, useUpdateProduto } from "../../hooks/useCreateProdutos"
+import { useDebounced } from "../../hooks/useDebouced"
 
 import * as S from "./styles"
 
@@ -21,11 +22,12 @@ const Produtos = () => {
     const [editingProduct, setEditingProduct] = useState<Produto | null>(null)
     const [page, setPage] = useState(1)
     const [search, setSearch] = useState("")
-    const [debouncedSearch, setDebouncedSearch] = useState('')
 
     const { mutate: createProduto } = useCreateProduto()
     const { mutate: updateProduto } = useUpdateProduto()
     const {mutate: deleteProduto} = useDeleteProduto()
+
+    const debouncedSearch = useDebounced(search, 300)
 
     const {
     data: produtos,
@@ -100,13 +102,6 @@ const Produtos = () => {
             }
         })
     }
-
-    useEffect(() => {
-        const timeOut = setTimeout(() => {
-            setDebouncedSearch(search)
-        }, 300)
-        return () => clearTimeout(timeOut)
-    }, [search])
 
     if (isLoading) {
         return <h2>Carregando produtos...</h2>
