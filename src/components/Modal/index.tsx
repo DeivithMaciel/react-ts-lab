@@ -12,8 +12,8 @@ const Modal = ({ aberto, onClose, children, title }: ModalProps) => {
         return null
     }
     return (
-        <S.Overlay onClick={(() => onClose())}>
-            <S.Container onClick={((e) => e.stopPropagation())}>
+        <S.Overlay data-testid='overlay' onClick={(() => onClose())}>
+            <S.Container data-testid='container' onClick={((e) => e.stopPropagation())}>
             <S.Header>
                 <h2>{title}</h2>
                 <button onClick={(() => onClose())}>X</button>
